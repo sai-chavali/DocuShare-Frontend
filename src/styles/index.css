@@ -1,0 +1,16 @@
+.pdf-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  
+  .pdf-toolbar span {
+    margin: 0 16px;
+    font-size: 18px;
+  }
+  
+  .pdf-container {
+    width: 100%;
+    height: 100vh;
+  }
