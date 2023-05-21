@@ -7,15 +7,15 @@ import CopyableTextbox from "./CopyableTextbox";
 export function ShareDialog(props) {
     const [userAccessList, setUserAccessList] = React.useState([]);
     const [isPublic, setIsPublic] = React.useState(true);
-    const [expirationTime, setExpirationTime] = React.useState();
-    const [url, setUrl] = React.useState();
+    const [expirationTime, setExpirationTime] = React.useState('');
+    const [url, setUrl] = React.useState('');
     const [clickedShare, setClickedShare] = React.useState(false); 
     const { post,loading } = HttpService();
 
 
     const handleShare = async () => {
         setClickedShare(true);
-        const response = await post('/private/share', {isPublic, expirationTime, userAccessList, documentId: props.documentId});
+        const response = await post('/private/share', {publicViewable:isPublic, expirationTime: new Date(expirationTime), userAccessList, documentId: props.documentId});
         setUrl(`${window.location.origin}/document/${response}`)
     }
 

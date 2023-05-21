@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import HttpService from '../utils/HttpService';
 import { Share } from '@mui/icons-material';
 import { ShareDialog } from './ShareDialog';
+import Loader from './Loader';
 
-export const UploadedFilesTable = () => {
-    const [data, setData] = useState([]);
-    const { loading, get } = HttpService();
-    const [open, setOpen] = React.useState(false);
-    const [name, setName] = React.useState('');
-    const [id, setId] = React.useState(0);
+export const UploadedFilesTable = (props) => {
+    const [open, setOpen] = useState(false);
+    const [name, setName] = useState('');
+    const [id, setId] = useState(0);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -25,40 +24,27 @@ export const UploadedFilesTable = () => {
         handleClickOpen();
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await get('/private/documentDetails');
-                setData(response);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
     return (
         <div>
-            {loading ? (
-                <div>Loading...</div>
+            {props.loading ? (
+                <Loader/>
             ) : (
                 <>
-                <Typography variant='h4' sx={{ml:0}}>Uploaded Files</Typography>
+                <Typography variant='h4' sx={{mt: 3,mb:3}}>Uploaded Files</Typography>
                     <TableContainer component={Paper}>
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>FileName</TableCell>
-                                    <TableCell>Uploaded On</TableCell>
-                                    <TableCell>Action</TableCell>
+                                    <TableCell><b>FileName</b></TableCell>
+                                    <TableCell><b>Uploaded On</b></TableCell>
+                                    <TableCell><b>Action</b></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.map((item) => (
+                                {props.data.map((item) => (
                                     <TableRow key={item.id}>
                                         <TableCell>{item.fileName}</TableCell>
-                                        <TableCell>{item.uploadedOn}</TableCell>
+                                        <TableCell>{new Date(item.uploadedOn).toLocaleDateString()}</TableCell>
                                         <TableCell>
                                             <IconButton onClick={() => handleShareButtonClick(item.fileName, item.id)}>
                                                 <Share />

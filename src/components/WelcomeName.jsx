@@ -9,7 +9,7 @@ const WelcomeName = () => {
     const activeAccount = instance.getActiveAccount();
     useEffect(() => {
         if (activeAccount) {
-            setName(activeAccount.name.split(' ')[0]);
+                setName(activeAccount?.name?.split(' ')[0] || activeAccount?.username?.split('@')[0]);
         } else {
             setName(null);
         }

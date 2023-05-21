@@ -14,10 +14,10 @@ const isFirefox = firefox > 0; // Only needed if you need to support the redirec
 // Config object to be passed to Msal on creation
 export const msalConfig = {
     auth: {
-        clientId:'tenant-id',
-        authority: 'https://login.microsoftonline.com/${tenantId}',
+        clientId:'',
+        authority: 'https://login.microsoftonline.com/',
         redirectUri: "/",
-        postLogoutRedirectUri: "${backend_url",
+        postLogoutRedirectUri: "https://docushare.azurewebsites.net/",
     },
     cache: {
         cacheLocation: "localStorage",
@@ -61,4 +61,4 @@ export const graphConfig = {
     graphMeEndpoint: "https://graph.microsoft.com/v1.0/me"
 };
 
-export const backend_url = ''
+export const backend_url = 'https://docushare-backend.azurewebsites.net'

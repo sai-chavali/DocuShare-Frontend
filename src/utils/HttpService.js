@@ -37,7 +37,7 @@ const HttpService = () => {
             const response = await axios(config);
             setLoading(false);
             if (config.method !== 'get') {
-                enqueueSnackbar(`${response.data}`, { variant: 'success' })
+                enqueueSnackbar(`Saved Successfully`, { variant: 'success' })
             }
             return response.data;
         } catch (error) {

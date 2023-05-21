@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Button, Typography, Container } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import HttpService from '../utils/HttpService';
+import Loader from './Loader';
 
-const FileUpload = () => {
+const FileUpload = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const { post } = HttpService();
+  const { loading, post } = HttpService();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -17,11 +18,12 @@ const FileUpload = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('doc', selectedFile);
-      post('/private/upload', formData);
+      const res = await post('/private/upload', formData);
+      props.addDoc(res);
     }
   };
 
@@ -56,6 +58,7 @@ const FileUpload = () => {
       >
         Upload
       </Button>
+      {loading && <Loader/>}
     </Container>
   );
 };

@@ -7,12 +7,13 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import { SignInButton } from './SignInButton';
+import Loader from './Loader';
 
 const PdfViewer = (props) => {
     const { accounts } = useMsal();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [pdfData, setpdfData] = useState();
-    const { get } = HttpService();
+    const { get, loading } = HttpService();
     const [numPages, setNumPages] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     // const navigate = useNavigate();
@@ -70,7 +71,8 @@ const PdfViewer = (props) => {
                 </div>
             );
         }
-        return null;
+        else if(loading)
+            return <Loader/>;
     };
 
     return (
